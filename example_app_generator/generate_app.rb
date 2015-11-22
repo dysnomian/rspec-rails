@@ -15,6 +15,10 @@ in_root do
   # edge branches
   gsub_file 'Gemfile', /^.*\bgem 'rails.*$/, ''
 
+  if Rails::VERSION::STRING >= '5.0.0'
+    append_to_file('Gemfile', "gem 'rails-controller-testing', :git => 'https://github.com/rails/rails-controller-testing'")
+  end
+
   # Use our version of RSpec and Rails
   append_to_file 'Gemfile', <<-EOT.gsub(/^ +\|/, '')
     |# Rack::Cache 1.3.0 requires Ruby >= 2.0.0

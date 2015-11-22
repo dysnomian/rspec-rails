@@ -125,4 +125,12 @@ gsub_file 'spec/spec_helper.rb',
           'config.warnings = false'
 gsub_file '.rspec', '--warnings', ''
 
+append_to_file 'spec/rails_helper.rb', <<-EOT.gsub(/^ +\|/, '')
+  |RSpec.configure do |config|
+  |  config.include Rails::Controller::Testing::TestProcess
+  |  config.include Rails::Controller::Testing::TemplateAssertions
+  |  config.include Rails::Controller::Testing::Integration
+  |end
+EOT
+
 final_tasks
