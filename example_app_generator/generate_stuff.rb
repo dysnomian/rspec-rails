@@ -127,9 +127,11 @@ gsub_file '.rspec', '--warnings', ''
 
 append_to_file 'spec/rails_helper.rb', <<-EOT.gsub(/^ +\|/, '')
   |RSpec.configure do |config|
-  |  config.include Rails::Controller::Testing::TestProcess
-  |  config.include Rails::Controller::Testing::TemplateAssertions
-  |  config.include Rails::Controller::Testing::Integration
+  |  [:controller, :view, :request].each do |type|
+  |    config.include Rails::Controller::Testing::TestProcess, :type => type
+  |    config.include Rails::Controller::Testing::TemplateAssertions, :type => type
+  |    config.include Rails::Controller::Testing::Integration, :type => type
+  |  end
   |end
 EOT
 
